@@ -1,10 +1,11 @@
-import * as fs from 'fs';
+import * as chokidar from 'chokidar';
 import {spawn} from 'child_process';
 
-const watch = fs.watch('helloworld.txt', () => {
-});
 
-watch.on('change', () => {
+const watcher = chokidar.watch('helloworld.txt');
+
+
+watcher.on('change', () => {
   const wc = spawn('wc', ['helloworld.txt']);
 
   let data = '';
@@ -18,3 +19,4 @@ watch.on('change', () => {
     console.log(`File helloworld.txt has ${wcOutputAsArray[3]} characters`);
   });
 });
+
