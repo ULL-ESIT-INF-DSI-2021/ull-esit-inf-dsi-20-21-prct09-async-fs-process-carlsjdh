@@ -18,3 +18,5 @@ watch.on('change', () => {
     console.log(`File helloworld.txt has ${wcOutputAsArray[3]} characters`);
   });
 });
+
+fs.writeFile()
