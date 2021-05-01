@@ -4,8 +4,8 @@
   "description": "",
   "main": "dist/basicFunctions.js",
   "scripts": {
-    "test": "mocha",
-    "coverage": "tsc && nyc npm test && nyc report --reporter=lcov",
+    "test": "tsc && mocha",
+    "coverage": "nyc npm test && nyc report --reporter=lcov",
     "start": "tsc-watch --onSuccess \"node dist/index.js\"",
     "doc": "typedoc; touch ./docs/.nojekyll"
   },
