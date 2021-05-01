@@ -218,33 +218,38 @@ yargs.command({
       demandOption: true,
       type: 'string',
     },
-    option: {
-      describe: 'option',
+  },
+  handler(argv) {
+    if (typeof argv.oldPath === 'string') {
+      fsExtra.move(`${argv.oldPath}`, `${argv.newPath}`, (err) => {
+        if (err) return console.error(err);
+        console.log('Move success!');
+      });
+    }
+  },
+});
+
+yargs.command({
+  command: 'cp',
+  describe: 'cp file or directory',
+  builder: {
+    oldPath: {
+      describe: 'path',
+      demandOption: true,
+      type: 'string',
+    },
+    newPath: {
+      describe: 'path',
       demandOption: true,
       type: 'string',
     },
   },
   handler(argv) {
-    if (typeof argv.path === 'string') {
-      switch (argv.option) {
-        case 'd':
-          fsExtra.move(`${argv.oldPath}`, `${argv.newPath}`, (err) => {
-            if (err) return console.error(err);
-            console.log('Directory move success!');
-          });
-          break;
-        case 'f':
-          fsExtra.move(`${argv.oldPath}`, `${argv.newPath}`, (err) => {
-            if (err) return console.error(err);
-            console.log('File move success!');
-          });
-          break;
-        default:
-          console.log(
-              'Error options, options available d (Directory) or f (File)',
-          );
-          break;
-      }
+    if (typeof argv.oldPath === 'string') {
+      fsExtra.copy(`${argv.oldPath}`, `${argv.newPath}`, (err) => {
+        if (err) return console.error(err);
+        console.log('Copy Success!');
+      });
     }
   },
 });
