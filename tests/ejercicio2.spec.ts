@@ -12,7 +12,7 @@ const test2 = (args :string) => {
 };
 
 
-describe(('EJ2: CLI'), () => {
+describe(('EJ2: wc'), () => {
   it(('Muestra número de líneas withPipe'), () => {
     expect(test(`--file="helloworld.txt" --option="l"`)).to.equal(
         `Great! We can execute!\nhelloworld.txt has 3 lines\n`,

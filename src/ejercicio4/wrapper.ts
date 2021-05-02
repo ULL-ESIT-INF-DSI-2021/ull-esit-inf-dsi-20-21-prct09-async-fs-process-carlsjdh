@@ -43,7 +43,11 @@ yargs.command({
   handler(argv) {
     if (typeof argv.path === 'string') {
       fs.mkdir(`${argv.path}`, {recursive: true}, (err) => {
-        if (err) console.log('Error during creating directory...');
+        if (err) {
+          console.log('Error during creating directory...');
+        } else {
+          console.log(`${argv.path} created`);
+        }
       });
     }
   },

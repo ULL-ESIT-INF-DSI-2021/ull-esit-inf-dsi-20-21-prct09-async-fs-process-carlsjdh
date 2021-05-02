@@ -524,7 +524,23 @@
 <span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">wcOutput</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000">;</span>
 </code></pre>
 				<p>Observamos como ahora <code>wc</code> es un único proceso y todo lo demás quedaría igual.  </p>
+				<p><strong>Ejemplo de uso:</strong></p>
+				<pre><code class="language-bash"><span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio2/appWithPipe.js get --file=</span><span style="color: #A31515">&quot;helloworld.txt&quot;</span><span style="color: #000000"> --option=</span><span style="color: #A31515">&quot;l&quot;</span>
+<span style="color: #000000">Great! We can execute!</span>
+<span style="color: #000000">helloworld.txt has 3 lines</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio2/appWithPipe.js get --file=</span><span style="color: #A31515">&quot;helloworld.txt&quot;</span><span style="color: #000000"> --option=</span><span style="color: #A31515">&quot;w&quot;</span>
+<span style="color: #000000">Great! We can execute!</span>
+<span style="color: #000000">helloworld.txt has 6 words</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio2/appWithPipe.js get --file=</span><span style="color: #A31515">&quot;helloworld.txt&quot;</span><span style="color: #000000"> --option=</span><span style="color: #A31515">&quot;c&quot;</span>
+<span style="color: #000000">Great! We can execute!</span>
+<span style="color: #000000">helloworld.txt has 21 characters</span>
+<span style="color: #000000">[~/practicas/P9(main)]$</span>
+</code></pre>
 				<p><strong>¿Qué sucede si indica desde la línea de comandos un fichero que no existe o una opción no válida?</strong><br>Se mostrará por consola un mensaje de error ya que gracias a la información de <code>err</code> es posible filtrar aquellos casos en los que ocurra algún error.  </p>
+				<pre><code class="language-bash"><span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio2/appWithPipe.js get --file=</span><span style="color: #A31515">&quot;helloworl.txt&quot;</span><span style="color: #000000"> --option=</span><span style="color: #A31515">&quot;c&quot;</span>
+<span style="color: #000000">File helloworl.txt does not exist</span>
+<span style="color: #000000">[~/practicas/P9(main)]$</span>
+</code></pre>
 				<a href="#ejercicio-3" id="ejercicio-3" style="color: inherit; text-decoration: none;">
 					<h2>Ejercicio 3</h2>
 				</a>

@@ -295,8 +295,27 @@ let wcOutput = '';
 ````
 Observamos como ahora `wc` es un único proceso y todo lo demás quedaría igual.  
 
+__Ejemplo de uso:__
+````bash
+[~/practicas/P9(main)]$node dist/ejercicio2/appWithPipe.js get --file="helloworld.txt" --option="l"
+Great! We can execute!
+helloworld.txt has 3 lines
+[~/practicas/P9(main)]$node dist/ejercicio2/appWithPipe.js get --file="helloworld.txt" --option="w"
+Great! We can execute!
+helloworld.txt has 6 words
+[~/practicas/P9(main)]$node dist/ejercicio2/appWithPipe.js get --file="helloworld.txt" --option="c"
+Great! We can execute!
+helloworld.txt has 21 characters
+[~/practicas/P9(main)]$
+````
+
 __¿Qué sucede si indica desde la línea de comandos un fichero que no existe o una opción no válida?__  
 Se mostrará por consola un mensaje de error ya que gracias a la información de `err` es posible filtrar aquellos casos en los que ocurra algún error.  
+````bash
+[~/practicas/P9(main)]$node dist/ejercicio2/appWithPipe.js get --file="helloworl.txt" --option="c"
+File helloworl.txt does not exist
+[~/practicas/P9(main)]$
+````
 
 ## Ejercicio 3
 
