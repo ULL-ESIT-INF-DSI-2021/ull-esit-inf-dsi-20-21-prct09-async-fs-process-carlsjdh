@@ -3,7 +3,10 @@ import * as fs from 'fs';
 import * as yargs from 'yargs';
 import {constants} from 'fs';
 
-
+/**
+ * Comando que permite observar los cambios
+ * del fichero notas asociado a un usuario
+ */
 yargs.command({
   command: 'watch',
   describe: 'Watch notes',

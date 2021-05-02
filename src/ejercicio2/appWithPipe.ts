@@ -3,6 +3,11 @@ import * as fs from 'fs';
 import {constants} from 'fs';
 import {spawn} from 'child_process';
 
+
+/**
+ * Comando get (Versión sin Pipe) que permite obtener información
+ * de número de líneas, caracteres o palabras
+ */
 yargs.command({
   command: 'get',
   describe: 'Information file',
