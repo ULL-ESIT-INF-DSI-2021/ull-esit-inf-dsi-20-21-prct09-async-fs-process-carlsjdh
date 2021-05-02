@@ -295,6 +295,9 @@ let wcOutput = '';
 ````
 Observamos como ahora `wc` es un único proceso y todo lo demás quedaría igual.  
 
+__¿Qué sucede si indica desde la línea de comandos un fichero que no existe o una opción no válida?__  
+Se mostrará por consola un mensaje de error ya que gracias a la información de `err` es posible filtrar aquellos casos en los que ocurra algún error.  
+
 ## Ejercicio 3
 
 Desarrollar una aplicación usando el módulo `yargs` que nos permita notificar sobre modificaciones de las notas (respecto a la práctica 8) de cierto usuario concreto. Para ellos utilizaremos el módulo [`chokidar`](https://github.com/paulmillr/chokidar) que nos permitirá observar cambios de dicho directorio (Se ha sustituido por `Watchfile` de Node Js por presentar errores en duplicación de eventos en sistemas linux).  
@@ -430,7 +433,68 @@ fs.readFile(`${argv.path}`, (err, data) => {
 
 Usaremos `fs.readFile` que simplemente lee el fichero de la ruta `path` y posteriomente mostramos por consola a traves del tipo de dato `buffer` que contiene `data`.  
 
+__5. Borrar ficheros y directorios.__  
+Utilizaremos el comando `rm` y el argumento `path` para eliminar ficheros o directorios con nuestro programa. En esta ocasión utilizaremos la función `fs.stats` para verificar si el `path` es un fichero o directorio para mostrar por consola la información adecuada, además de utilizar el módulo `rimraf` para efectuar la eliminación de dichos datos:  
 
+````typescript
+fs.lstat(`${argv.path}`, (err, stats) => {
+  if (err) {
+    console.log('Error, path doesn´t exist');
+  } else {
+    if (stats.isFile()) {
+      fs.rm(`${argv.path}`, (err) => {
+        if (err) {
+          console.log(`Error deleting file`);
+        } else {
+          console.log(`Deleted file ${argv.path}`);
+        }
+      });
+    } else {
+      rimraf(`${argv.path}`, (err) => {
+        if (err) {
+          console.log(`Error directory file`);
+        } else {
+          console.log(`Deleted directory ${argv.path}`);
+        }
+      });
+    }
+  }
+});
+````
+Podemos observar como también filtramos los errores en caso de producirse alguno durante la eliminación.  
 
-# Conclusión
+__6. Mover y copiar ficheros y/o directorios de una ruta a otra. Para este caso, la aplicación recibirá una ruta origen y una ruta destino. En caso de que la ruta origen represente un directorio, se debe copiar dicho directorio y todo su contenido a la ruta destino.__  
+
+Para ejecutar este comando tenemos dos opciones:
+- `cp`: Permite copiar ficheros o directorios especificando los argumentos `oldPath` (Ruta origen) y `newPath` (Nueva ruta donde copiar el fichero/directorio).  
+
+````typescript
+fsExtra.copy(`${argv.oldPath}`, `${argv.newPath}`, (err) => {
+  if (err) return console.error(err);
+  console.log('Copy Success!');
+});
+````
+En esta ocasión se ha optado por utilizar el módulo `fs-extra` que nos permite agregar más funcionalides al fs orignal de node js, concretamente `fsExtra.copy()` que nos permitirá copiar fichero o directorios según las rutas especficidas como argumentos. Filtraremos los errores y mostremos por consola si todo ha salido correctamente.  
+
+- `mv`: Permite mover ficheros o directorios especificando los argumentos `oldPath` (Ruta origen) y `newPath` (Nueva ruta donde copiar el fichero/directorio).  
+
+````typescript
+fsExtra.move(`${argv.oldPath}`, `${argv.newPath}`, (err) => {
+  if (err) return console.error(err);
+  console.log('Move success!');
+});
+````  
+
+En esta ocasión, nuevamente se ha utilizado funciones del módulo de `fs-extra` cogiendo `fsExtra.move` que permite mover ficheros/directorios especificando las rutas correspondientes.  
+
+# Conclusión  
+En esta practica he podido aprender a utilizar Node Js para gestionar el apartado de sistema de ficheros aunque se han encontrado dificultades para realizar ciertos test (Dada la naturaleza asíncrona de ciertos comportamientos del programa) además de tener un problema muy serio con `sonarcloud` dado que no fue posible eliminar el problema de duplicación de código y por tanto nunca obtener el `pass` (Esto es debido a que se repite dentro del módulo `yargs` el `command` para cada comando generando código duplicado).  
+
 # Bibliografía
+
+https://nodejs.org/api/fs.html#fs_file_access_constants  
+https://ull-esit-inf-dsi-2021.github.io/prct09-async-fs-process/  
+https://dev.to/shadowtime2000/testing-command-line-tools-47bk  
+https://coursesweb.net/nodejs/move-copy-directory  
+https://github.com/paulmillr/chokidar  
+
