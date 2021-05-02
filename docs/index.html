@@ -189,20 +189,6 @@
 							<td></td>
 							<td></td>
 						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
 				</tbody></table>
 				<p>Este al ser un método asíncrono se colocará posteriormente se colocará en <code>Web Api</code>.  </p>
 				<table>
@@ -218,20 +204,6 @@
 					<tbody><tr>
 							<td></td>
 							<td><code>(err) =&gt; {}</code></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -257,6 +229,7 @@
 						</tr>
 				</tbody></table>
 				<p>Como la <code>Call Stack</code> se encuentra vacía los procesos de <code>Queue</code> pueden se introducidos y ejecutados en la <code>Call Stack</code>.  </p>
+				<p>Si obtuviesemos un <code>err</code>: </p>
 				<table>
 					<thead>
 						<tr>
@@ -268,14 +241,85 @@
 						</tr>
 					</thead>
 					<tbody><tr>
-							<td><code>(err) =&gt; {}</code></td>
+							<td><code>(err) =&gt; {----}</code></td>
+							<td></td>
+							<td></td>
+							<td><code>File ${filename} does not exist</code></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<p>En caso contrario:  </p>
+				<p>Se muestra el mensaje de que está observando el fichero  </p>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><code>(err) =&gt; {----}</code></td>
+							<td></td>
+							<td></td>
+							<td><code>Starting to watch file ${filename}</code></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<p>Creamos el <code>watcher</code> y activamos un evento para cuando detecte un cambio en el fichero que se quedará esperando en la <code>Web api</code> hasta detectar dicho evento y mandar la <code>Call Back</code> asociada.  </p>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><code>watcher.on(&#39;change&#39;, () =&gt; {})</code></td>
 							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
 						</tr>
 						<tr>
+							<td><code>(err) =&gt; {----}</code></td>
 							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td></td>
+							<td><code>() =&gt; {} (change)</code></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><code>(err) =&gt; {----}</code></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -289,6 +333,88 @@
 							<td></td>
 						</tr>
 				</tbody></table>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td></td>
+							<td><code>() =&gt; {} (change)</code></td>
+							<td></td>
+							<td><code>File ${filename} is no longer watched</code></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><code>(err) =&gt; {----}</code></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<p>Ahora se quedará el evento esperando hasta producirse un cambio:  </p>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td></td>
+							<td><code>() =&gt; {} (change)</code></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<p>Cuando se produce un cambio ocurre lo siguiente:  </p>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td></td>
+							<td><code>() =&gt; {} (change)</code></td>
+							<td>console.log(<code>File ${filename} has been modified somehow</code>) (Lanzado por el evento)</td>
+							<td></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td></td>
+							<td><code>() =&gt; {} (change)</code></td>
+							<td></td>
+							<td><code>File ${filename} has been modified somehow</code></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<p>Y así sucesivamente por cada cambio ya que el watch quedará bloquedo dentro del <code>Web api</code> por cada cambio enviando su <code>call back</code>.  </p>
 				<a href="#ejercicio-2" id="ejercicio-2" style="color: inherit; text-decoration: none;">
 					<h2>Ejercicio 2</h2>
 				</a>

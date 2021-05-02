@@ -102,16 +102,13 @@ El método `access` se colocará en `Call Stack`.
 |---|---|---|---|---|  
 |  `(err) => {}` |   |   |   |   |  
 |  `access()` |   |   |   |   |  
-|   |   |   |   |   |  
-|   |   |   |   |   |   
 
 Este al ser un método asíncrono se colocará posteriormente se colocará en `Web Api`.  
 
 | Call Stack  |   Web Api   | Queue  |  Console |   |
 |---|---|---|---|---|
 |   | `(err) => {}`  |   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   | 
+
 
 Cuando `access` terminé su evento asíncrono (comprobar si existe el fichero) mandará el callback a la `Queue`.  
 
@@ -122,12 +119,63 @@ Cuando `access` terminé su evento asíncrono (comprobar si existe el fichero) m
 
 Como la `Call Stack` se encuentra vacía los procesos de `Queue` pueden se introducidos y ejecutados en la `Call Stack`.  
 
+Si obtuviesemos un `err`: 
+
 | Call Stack  |   Web Api   | Queue  |  Console |   |
 |---|---|---|---|---|
-|  `(err) => {}`  |  |    |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   | 
+|  `(err) => {----}`  |  |    | `File ${filename} does not exist`  |   |
 
+
+En caso contrario:  
+
+Se muestra el mensaje de que está observando el fichero  
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |  
+|---|---|---|---|---|  
+|  `(err) => {----}`  |  |    | `Starting to watch file ${filename}`  |   |  
+ 
+
+Creamos el `watcher` y activamos un evento para cuando detecte un cambio en el fichero que se quedará esperando en la `Web api` hasta detectar dicho evento y mandar la `Call Back` asociada.  
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |  
+|---|---|---|---|---|  
+|  `watcher.on('change', () => {})`  |  |    |  |   |  
+|  `(err) => {----}` |   |   |   |   |  
+
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |  
+|---|---|---|---|---|  
+|   | `() => {} (change)`  |    |  |   |  
+|  `(err) => {----}` |   |   |   |   |  
+ 
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |  
+|---|---|---|---|---|  
+|    | `() => {} (change)`  |    | `File ${filename} is no longer watched` |   |  
+|  `(err) => {----}` |   |   |   |   |  
+
+Ahora se quedará el evento esperando hasta producirse un cambio:  
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |  
+|---|---|---|---|---|  
+|    | `() => {} (change)`  |  | |   |  
+
+
+
+
+Cuando se produce un cambio ocurre lo siguiente:  
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |  
+|---|---|---|---|---|  
+|  | `() => {} (change)`  | console.log(`File ${filename} has been modified somehow`) (Lanzado por el evento)   | |   |  
+
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |  
+|---|---|---|---|---|  
+|  | `() => {} (change)`  |   | `File ${filename} has been modified somehow` |   |  
+
+
+Y así sucesivamente por cada cambio ya que el watch quedará bloquedo dentro del `Web api` por cada cambio enviando su `call back`.  
 ## Ejercicio 2
 En este ejercicio tendremos que desarrollar un programa que nos permita leer el número de líneas, caracteres y palabras. Utilzaremos el módulo de `yargs` para implementar dicho proposito. Este programa permitira mediante el comando `get` obtener la información previamente dicha además de un argumento `option` para establecer que información concretamente quiere el usuario. Se nos pide dos formas de hacerlo:
 - Utilizando el método `pipe`:  
