@@ -597,6 +597,18 @@
 </code></pre>
 				<p><strong>¿Cómo haría para mostrar, no solo el nombre, sino también el contenido del fichero, en el caso de que haya sido creado o modificado?</strong><br>En el evento <code>change</code> y <code>add</code> del <code>watcher</code> leeríamos el fichero correspondiente que nos pasa por parametro utilizando el método <code>fs.readFile</code> que nos devuelve a su vez el contenido del fichero nuevo/modificado para mostrarlo por consola.</p>
 				<p><strong>¿Cómo haría para que no solo se observase el directorio de un único usuario sino todos los directorios correspondientes a los diferentes usuarios de la aplicación de notas?</strong><br>Cambiar el ámbito del parámetro a todo el fichero que contiene todas las notas de todos los usuarios para observar todos los cambios de dicho directorio.  </p>
+				<p><strong>Ejemplo de uso</strong><br>Terminal 1:  </p>
+				<pre><code class="language-Bash"><span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio3/watchNotes.js watch --user=</span><span style="color: #A31515">&quot;Carlos&quot;</span>
+<span style="color: #000000">notes/Carlos/Nota1 has been added!</span>
+<span style="color: #000000">notes/Carlos/Nota2 has been added!</span>
+<span style="color: #000000">notes/Carlos/Nota2 has been changed!</span>
+</code></pre>
+				<p>Terminal 2:  </p>
+				<pre><code class="language-bash"><span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/notesApp/note-app.js add --user=</span><span style="color: #A31515">&quot;Carlos&quot;</span><span style="color: #000000"> --title=</span><span style="color: #A31515">&quot;Nota1&quot;</span><span style="color: #000000"> --body=</span><span style="color: #A31515">&quot;Nota&quot;</span><span style="color: #000000"> --color=</span><span style="color: #A31515">&quot;blue&quot;</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/notesApp/note-app.js add --user=</span><span style="color: #A31515">&quot;Carlos&quot;</span><span style="color: #000000"> --title=</span><span style="color: #A31515">&quot;Nota2&quot;</span><span style="color: #000000"> --body=</span><span style="color: #A31515">&quot;Nota&quot;</span><span style="color: #000000"> --color=</span><span style="color: #A31515">&quot;blue&quot;</span>
+<span style="color: #000000">New note added! (Title Nota2)</span>
+<span style="color: #000000">[~/practicas/P9(main)]$</span>
+</code></pre>
 				<a href="#ejercicio-4" id="ejercicio-4" style="color: inherit; text-decoration: none;">
 					<h2>Ejercicio 4</h2>
 				</a>
@@ -615,12 +627,28 @@
 <span style="color: #000000">});</span>
 </code></pre>
 				<p>Con las información de <code>stats</code> esta nos dirá si es un fichero con <code>isFile()</code> que si devuelve true mostrará que si es un fichero y si es false mostrará que es un directorio.  </p>
+				<p><strong>Ejemplo de uso</strong>  </p>
+				<pre><code class="language-bash"><span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio4/wrapper.js check --path=</span><span style="color: #A31515">&quot;helloworld.txt&quot;</span><span style="color: #000000"> </span>
+<span style="color: #000000">helloworld.txt is a File</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio4/wrapper.js check --path=</span><span style="color: #A31515">&quot;src&quot;</span><span style="color: #000000"> </span>
+<span style="color: #000000">src is a Directory</span>
+<span style="color: #000000">[~/practicas/P9(main)]$</span>
+</code></pre>
 				<p><strong>2. Crear un nuevo directorio a partir de una nueva ruta que recibe como parámetro.</strong><br>El comando para invocar dicho programa es <code>mkdir</code> cuyo parametro para ser utilizado es <code>path</code>.<br>Aprovecharemos la función <code>fs.mkdir</code> para crear directorios con el <code>path</code> del argumento:  </p>
 				<pre><code class="language-typescript"><span style="color: #001080">fs</span><span style="color: #000000">.</span><span style="color: #795E26">mkdir</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">path</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">, {</span><span style="color: #001080">recursive:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">}, (</span><span style="color: #001080">err</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
 <span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">) </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Error during creating directory...&#039;</span><span style="color: #000000">);</span>
 <span style="color: #000000">});</span>
 </code></pre>
 				<p>En caso de producirse un error para crear el directorio se avisará por consola.  </p>
+				<p><strong>Ejemplo de uso</strong>  </p>
+				<pre><code class="language-bash"><span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$find</span><span style="color: #000000"> dir</span>
+<span style="color: #000000">find: ‘dir’: No existe el archivo o el directorio</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio4/wrapper.js mkdir --path=</span><span style="color: #A31515">&quot;dir&quot;</span><span style="color: #000000"> </span>
+<span style="color: #000000">dir created</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$find</span><span style="color: #000000"> dir</span>
+<span style="color: #000000">dir</span>
+<span style="color: #000000">[~/practicas/P9(main)]$</span>
+</code></pre>
 				<p><strong>3. Listar los ficheros dentro de un directorio.</strong><br>El comando <code>list</code> nos permitirá listar los ficheros de un directorio pasado por el argumento <code>path</code>. En esta ocasión utilizaremos la función <code>fs.readdir()</code>:  </p>
 				<pre><code class="language-typescript"><span style="color: #001080">fs</span><span style="color: #000000">.</span><span style="color: #795E26">readdir</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">path</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">, (</span><span style="color: #001080">err</span><span style="color: #000000">, </span><span style="color: #001080">files</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
 <span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">) {</span>
@@ -634,6 +662,18 @@
 <span style="color: #000000">});</span>
 </code></pre>
 				<p><code>fs.readdir()</code>  devolerá <code>files</code> que contiene un array de todos los nombres de los ficheros de dicho directorio, razón por la cual se efectúa un <code>forEach</code> para mostrar por consola cada <code>file</code>.  </p>
+				<p><strong>Ejemplo de uso</strong>  </p>
+				<pre><code class="language-bash"><span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio4/wrapper.js list --path=</span><span style="color: #A31515">&quot;src&quot;</span><span style="color: #000000"> </span>
+<span style="color: #000000">List of src:</span>
+<span style="color: #000000">ejercicio1</span>
+<span style="color: #000000">ejercicio2</span>
+<span style="color: #000000">ejercicio3</span>
+<span style="color: #000000">ejercicio4</span>
+<span style="color: #000000">notesApp</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$ls</span><span style="color: #000000"> src/</span>
+<span style="color: #000000">ejercicio1  ejercicio2  ejercicio3  ejercicio4  notesApp</span>
+<span style="color: #000000">[~/practicas/P9(main)]$</span>
+</code></pre>
 				<p><strong>4. Mostrar el contenido de un fichero (similar a ejecutar el comando cat)</strong><br>Para invocar este comando usaremos <code>cat</code> y como argumento <code>path</code> para especificar el fichero que queremos visualizar:  </p>
 				<pre><code class="language-typescript"><span style="color: #001080">fs</span><span style="color: #000000">.</span><span style="color: #795E26">readFile</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">path</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">, (</span><span style="color: #001080">err</span><span style="color: #000000">, </span><span style="color: #001080">data</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
 <span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">) {</span>
@@ -644,6 +684,19 @@
 <span style="color: #000000">});</span>
 </code></pre>
 				<p>Usaremos <code>fs.readFile</code> que simplemente lee el fichero de la ruta <code>path</code> y posteriomente mostramos por consola a traves del tipo de dato <code>buffer</code> que contiene <code>data</code>.  </p>
+				<p><strong>Ejemplo de uso</strong>  </p>
+				<pre><code class="language-bash"><span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio4/wrapper.js cat --path=</span><span style="color: #A31515">&quot;helloworld.txt&quot;</span><span style="color: #000000"> </span>
+<span style="color: #000000">Line 1</span>
+<span style="color: #000000">Line 2</span>
+<span style="color: #000000">Line 3</span>
+
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$cat</span><span style="color: #000000"> helloworld.txt </span>
+<span style="color: #000000">Line 1</span>
+<span style="color: #000000">Line 2</span>
+<span style="color: #000000">Line 3</span>
+<span style="color: #000000">[~/practicas/P9(main)]$</span>
+
+</code></pre>
 				<p><strong>5. Borrar ficheros y directorios.</strong><br>Utilizaremos el comando <code>rm</code> y el argumento <code>path</code> para eliminar ficheros o directorios con nuestro programa. En esta ocasión utilizaremos la función <code>fs.stats</code> para verificar si el <code>path</code> es un fichero o directorio para mostrar por consola la información adecuada, además de utilizar el módulo <code>rimraf</code> para efectuar la eliminación de dichos datos:  </p>
 				<pre><code class="language-typescript"><span style="color: #001080">fs</span><span style="color: #000000">.</span><span style="color: #795E26">lstat</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">path</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">, (</span><span style="color: #001080">err</span><span style="color: #000000">, </span><span style="color: #001080">stats</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
 <span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">) {</span>
@@ -669,7 +722,14 @@
 <span style="color: #000000">  }</span>
 <span style="color: #000000">});</span>
 </code></pre>
-				<p>Podemos observar como también filtramos los errores en caso de producirse alguno durante la eliminación.  </p>
+				<p>Podemos observar como también filtramos los errores en caso de producirse alguno durante la eliminación. </p>
+				<p><strong>Ejemplo de uso</strong>  </p>
+				<pre><code class="language-bash"><span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio4/wrapper.js rm --path=</span><span style="color: #A31515">&quot;dir&quot;</span><span style="color: #000000"> </span>
+<span style="color: #000000">Deleted directory dir</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$find</span><span style="color: #000000"> dir</span>
+<span style="color: #000000">find: ‘dir’: No existe el archivo o el directorio</span>
+<span style="color: #000000">[~/practicas/P9(main)]$</span>
+</code></pre>
 				<p><strong>6. Mover y copiar ficheros y/o directorios de una ruta a otra. Para este caso, la aplicación recibirá una ruta origen y una ruta destino. En caso de que la ruta origen represente un directorio, se debe copiar dicho directorio y todo su contenido a la ruta destino.</strong>  </p>
 				<p>Para ejecutar este comando tenemos dos opciones:</p>
 				<ul>
@@ -690,6 +750,25 @@
 <span style="color: #000000">});</span>
 </code></pre>
 				<p>En esta ocasión, nuevamente se ha utilizado funciones del módulo de <code>fs-extra</code> cogiendo <code>fsExtra.move</code> que permite mover ficheros/directorios especificando las rutas correspondientes.  </p>
+				<p><strong>Ejemplo de uso</strong>  </p>
+				<pre><code class="language-bash"><span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio4/wrapper.js cp --oldPath=</span><span style="color: #A31515">&quot;helloworld.txt&quot;</span><span style="color: #000000"> --newPath=</span><span style="color: #A31515">&quot;newFile.txt&quot;</span>
+<span style="color: #000000">Copy Success!</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$cat</span><span style="color: #000000"> helloworld.txt </span>
+<span style="color: #000000">Line 1</span>
+<span style="color: #000000">Line 2</span>
+<span style="color: #000000">Line 3</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$cat</span><span style="color: #000000"> newFile.txt </span>
+<span style="color: #000000">Line 1</span>
+<span style="color: #000000">Line 2</span>
+<span style="color: #000000">Line 3</span>
+<span style="color: #000000">[~/practicas/P9(main)]$</span>
+
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$node</span><span style="color: #000000"> dist/ejercicio4/wrapper.js mv --oldPath=</span><span style="color: #A31515">&quot;helloworld.txt&quot;</span><span style="color: #000000"> --newPath=</span><span style="color: #A31515">&quot;src/newFile.txt&quot;</span>
+<span style="color: #000000">Move success!</span>
+<span style="color: #000000">[~/practicas/P9(main)]</span><span style="color: #001080">$ls</span><span style="color: #000000"> src/</span>
+<span style="color: #000000">ejercicio1  ejercicio2  ejercicio3  ejercicio4  newFile.txt  notesApp</span>
+<span style="color: #000000">[~/practicas/P9(main)]$</span>
+</code></pre>
 				<a href="#conclusión" id="conclusión" style="color: inherit; text-decoration: none;">
 					<h1>Conclusión</h1>
 				</a>

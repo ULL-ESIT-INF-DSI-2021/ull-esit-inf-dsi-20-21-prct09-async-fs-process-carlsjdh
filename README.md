@@ -384,6 +384,24 @@ En el evento `change` y `add` del `watcher` leeríamos el fichero correspondient
 __¿Cómo haría para que no solo se observase el directorio de un único usuario sino todos los directorios correspondientes a los diferentes usuarios de la aplicación de notas?__  
 Cambiar el ámbito del parámetro a todo el fichero que contiene todas las notas de todos los usuarios para observar todos los cambios de dicho directorio.  
 
+
+__Ejemplo de uso__  
+Terminal 1:  
+````Bash
+[~/practicas/P9(main)]$node dist/ejercicio3/watchNotes.js watch --user="Carlos"
+notes/Carlos/Nota1 has been added!
+notes/Carlos/Nota2 has been added!
+notes/Carlos/Nota2 has been changed!
+````
+
+Terminal 2:  
+````bash
+[~/practicas/P9(main)]$node dist/notesApp/note-app.js add --user="Carlos" --title="Nota1" --body="Nota" --color="blue"
+[~/practicas/P9(main)]$node dist/notesApp/note-app.js add --user="Carlos" --title="Nota2" --body="Nota" --color="blue"
+New note added! (Title Nota2)
+[~/practicas/P9(main)]$
+````  
+
 ## Ejercicio 4  
 
 Desarrollar un programa que use el módulo de `yargs` que nos permita hacer de `wrapper` enrre los diferentes comandos en Linux, concretamente los siguientes:  
@@ -408,6 +426,16 @@ fs.lstat(`${argv.path}`, (err, stats) => {
 
 Con las información de `stats` esta nos dirá si es un fichero con `isFile()` que si devuelve true mostrará que si es un fichero y si es false mostrará que es un directorio.  
 
+__Ejemplo de uso__  
+
+````bash
+[~/practicas/P9(main)]$node dist/ejercicio4/wrapper.js check --path="helloworld.txt" 
+helloworld.txt is a File
+[~/practicas/P9(main)]$node dist/ejercicio4/wrapper.js check --path="src" 
+src is a Directory
+[~/practicas/P9(main)]$
+````
+
 __2. Crear un nuevo directorio a partir de una nueva ruta que recibe como parámetro.__  
 El comando para invocar dicho programa es `mkdir` cuyo parametro para ser utilizado es `path`.  
 Aprovecharemos la función `fs.mkdir` para crear directorios con el `path` del argumento:  
@@ -419,6 +447,18 @@ fs.mkdir(`${argv.path}`, {recursive: true}, (err) => {
 ````  
 
 En caso de producirse un error para crear el directorio se avisará por consola.  
+
+__Ejemplo de uso__  
+
+````bash
+[~/practicas/P9(main)]$find dir
+find: ‘dir’: No existe el archivo o el directorio
+[~/practicas/P9(main)]$node dist/ejercicio4/wrapper.js mkdir --path="dir" 
+dir created
+[~/practicas/P9(main)]$find dir
+dir
+[~/practicas/P9(main)]$
+````
 
 __3. Listar los ficheros dentro de un directorio.__  
 El comando `list` nos permitirá listar los ficheros de un directorio pasado por el argumento `path`. En esta ocasión utilizaremos la función `fs.readdir()`:  
@@ -437,6 +477,22 @@ fs.readdir(`${argv.path}`, (err, files) => {
 ```` 
 `fs.readdir()`  devolerá `files` que contiene un array de todos los nombres de los ficheros de dicho directorio, razón por la cual se efectúa un `forEach` para mostrar por consola cada `file`.  
 
+
+__Ejemplo de uso__  
+
+````bash
+[~/practicas/P9(main)]$node dist/ejercicio4/wrapper.js list --path="src" 
+List of src:
+ejercicio1
+ejercicio2
+ejercicio3
+ejercicio4
+notesApp
+[~/practicas/P9(main)]$ls src/
+ejercicio1  ejercicio2  ejercicio3  ejercicio4  notesApp
+[~/practicas/P9(main)]$
+````
+
 __4. Mostrar el contenido de un fichero (similar a ejecutar el comando cat)__  
 Para invocar este comando usaremos `cat` y como argumento `path` para especificar el fichero que queremos visualizar:  
 
@@ -451,6 +507,22 @@ fs.readFile(`${argv.path}`, (err, data) => {
 ````  
 
 Usaremos `fs.readFile` que simplemente lee el fichero de la ruta `path` y posteriomente mostramos por consola a traves del tipo de dato `buffer` que contiene `data`.  
+
+__Ejemplo de uso__  
+
+````bash
+[~/practicas/P9(main)]$node dist/ejercicio4/wrapper.js cat --path="helloworld.txt" 
+Line 1
+Line 2
+Line 3
+
+[~/practicas/P9(main)]$cat helloworld.txt 
+Line 1
+Line 2
+Line 3
+[~/practicas/P9(main)]$
+
+````
 
 __5. Borrar ficheros y directorios.__  
 Utilizaremos el comando `rm` y el argumento `path` para eliminar ficheros o directorios con nuestro programa. En esta ocasión utilizaremos la función `fs.stats` para verificar si el `path` es un fichero o directorio para mostrar por consola la información adecuada, además de utilizar el módulo `rimraf` para efectuar la eliminación de dichos datos:  
@@ -480,7 +552,19 @@ fs.lstat(`${argv.path}`, (err, stats) => {
   }
 });
 ````
-Podemos observar como también filtramos los errores en caso de producirse alguno durante la eliminación.  
+Podemos observar como también filtramos los errores en caso de producirse alguno durante la eliminación. 
+
+__Ejemplo de uso__  
+
+````bash
+[~/practicas/P9(main)]$node dist/ejercicio4/wrapper.js rm --path="dir" 
+Deleted directory dir
+[~/practicas/P9(main)]$find dir
+find: ‘dir’: No existe el archivo o el directorio
+[~/practicas/P9(main)]$
+````
+
+
 
 __6. Mover y copiar ficheros y/o directorios de una ruta a otra. Para este caso, la aplicación recibirá una ruta origen y una ruta destino. En caso de que la ruta origen represente un directorio, se debe copiar dicho directorio y todo su contenido a la ruta destino.__  
 
@@ -505,6 +589,27 @@ fsExtra.move(`${argv.oldPath}`, `${argv.newPath}`, (err) => {
 ````  
 
 En esta ocasión, nuevamente se ha utilizado funciones del módulo de `fs-extra` cogiendo `fsExtra.move` que permite mover ficheros/directorios especificando las rutas correspondientes.  
+
+__Ejemplo de uso__  
+````bash
+[~/practicas/P9(main)]$node dist/ejercicio4/wrapper.js cp --oldPath="helloworld.txt" --newPath="newFile.txt"
+Copy Success!
+[~/practicas/P9(main)]$cat helloworld.txt 
+Line 1
+Line 2
+Line 3
+[~/practicas/P9(main)]$cat newFile.txt 
+Line 1
+Line 2
+Line 3
+[~/practicas/P9(main)]$
+
+[~/practicas/P9(main)]$node dist/ejercicio4/wrapper.js mv --oldPath="helloworld.txt" --newPath="src/newFile.txt"
+Move success!
+[~/practicas/P9(main)]$ls src/
+ejercicio1  ejercicio2  ejercicio3  ejercicio4  newFile.txt  notesApp
+[~/practicas/P9(main)]$
+````
 
 # Conclusión  
 En esta practica he podido aprender a utilizar Node Js para gestionar el apartado de sistema de ficheros aunque se han encontrado dificultades para realizar ciertos test (Dada la naturaleza asíncrona de ciertos comportamientos del programa) además de tener un problema muy serio con `sonarcloud` dado que no fue posible eliminar el problema de duplicación de código y por tanto nunca obtener el `pass` (Esto es debido a que se repite dentro del módulo `yargs` el `command` para cada comando generando código duplicado).  
