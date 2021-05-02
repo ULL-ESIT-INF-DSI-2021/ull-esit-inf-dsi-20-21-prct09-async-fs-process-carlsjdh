@@ -20,11 +20,15 @@ __Correo:__ alu0101016054@ull.edu.es
 # Introducción
 En esta práctica se plantean una serie de ejercicios o retos a resolver haciendo uso de las APIs proporcionadas por Node.js para interactuar con el sistema de ficheros, así como para crear procesos.
 # Objetivos
-- Gestionar ficheros con NodeJs
-- Creación de procesos e interconexión entre ellos con NodeJS
-# Ejercicios
-## Ejercicio 1
-Considere el siguiente ejemplo de código fuente TypeScript que hace uso del módulo fs de Node.js:
+- Gestionar ficheros con NodeJs  
+- Creación de procesos e interconexión entre ellos con NodeJS  
+
+# Ejercicios  
+
+## Ejercicio 1  
+
+Considere el siguiente ejemplo de código fuente TypeScript que hace uso del módulo fs de Node.js:  
+
 ````typescript
 import {access, constants, watch} from 'fs';
 
@@ -49,22 +53,26 @@ if (process.argv.length !== 3) {
     }
   });
 }
-````
+````  
+
 A continuación realizaremos una traza de ejecución del código anterior Teniendo en cuenta el `Call Stack`, la `Web Api` y la `Queue`. 
 
 __Primer caso: No se introduce un fichero__  
 Cuando al ejecutar el programa `process.argv.length` no es mayor que 3, eso quiere decir que no se ha especificado ningún argumento para poder establecer el fichero a observar.
 
-Por tanto, el código se quedaría aquí:
+Por tanto, el código se quedaría aquí:  
+
 ````typescript
 console.log('Please, specify a file');
-````
-E internamente quedaría así:
-| Call Stack  |   Web Api   | Queue  |  Console |   |
-|---|---|---|---|---|
-|  `annonymus()` | -  |  - | `Please, specify a file` |   |
+````  
 
-__Segundo caso: El programa funciona correctamente__
+E internamente quedaría así:  
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |  
+|---|---|---|---|---|  
+|  `annonymus()` | -  |  - | `Please, specify a file` |   |  
+
+__Segundo caso: El programa funciona correctamente__  
 Si se especifica el argumento que contendrá el fichero a observar entonces las líneas de código que se ejecutarán serán las siguientes:  
 ````typescript
   const filename = process.argv[2];
@@ -84,12 +92,39 @@ Si se especifica el argumento que contendrá el fichero a observar entonces las 
       console.log(`File ${filename} is no longer watched`);
     }
   });
-````
+````  
+El método `access` se colocará en `Call Stack`.  
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |  
+|---|---|---|---|---|  
+|  `(err) => {}` |   |   |   |   |  
+|  `access()` |   |   |   |   |  
+|   |   |   |   |   |  
+|   |   |   |   |   |   
+
+Este al ser un método asíncrono se colocará posteriormente se colocará en `Web Api`.  
+
 | Call Stack  |   Web Api   | Queue  |  Console |   |
 |---|---|---|---|---|
-|  d | d  |  d |  d |   |
+|   | `(err) => {}`  |   |   |   |
 |   |   |   |   |   |
+|   |   |   |   |   | 
+
+Cuando `access` terminé su evento asíncrono (comprobar si existe el fichero) mandará el callback a la `Queue`.  
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |
+|---|---|---|---|---|
+|   |  | `(err) => {}`   |   |   |
+
+
+Como la `Call Stack` se encuentra vacía los procesos de `Queue` pueden se introducidos y ejecutados en la `Call Stack`.  
+
+| Call Stack  |   Web Api   | Queue  |  Console |   |
+|---|---|---|---|---|
+|  `(err) => {}`  |  |    |   |   |
 |   |   |   |   |   |
+|   |   |   |   |   | 
+
 ## Ejercicio 2
 En este ejercicio tendremos que desarrollar un programa que nos permita leer el número de líneas, caracteres y palabras. Utilzaremos el módulo de `yargs` para implementar dicho proposito. Este programa permitira mediante el comando `get` obtener la información previamente dicha además de un argumento `option` para establecer que información concretamente quiere el usuario. Se nos pide dos formas de hacerlo:
 - Utilizando el método `pipe`:  
@@ -138,7 +173,8 @@ En este ejercicio tendremos que desarrollar un programa que nos permita leer el 
           });
         }
       });
-  ````
+  ````  
+
 Filtraremos los posibles errores de acceso al fichero mediante `fs.access`. Crearemos dos procesos:
 - `cat`: Encargado de mostrar el contenido del fichero
 - `wc`: Encargado de mostrar la información de número de líneas, palabras o caracteres. 
@@ -188,7 +224,14 @@ Y finalmente, cuando el proceso termine filtraremos la información recogida seg
       break;
   }
 ````  
+- Utilizando solamente procesos:
+  El esquema sería repetir basicamente lo anterior con la pequeña modificación siguiente:  
 
+````typescript
+const wc = spawn('wc', [`-${argv.option}`, `${argv.file}`]);
+let wcOutput = '';
+````
+Observamos como ahora `wc` es un único proceso y todo lo demás quedaría igual.  
 
 ## Ejercicio 3
 ## Ejercicio 4

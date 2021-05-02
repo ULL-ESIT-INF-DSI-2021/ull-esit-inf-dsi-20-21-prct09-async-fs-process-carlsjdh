@@ -1,0 +1,460 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>prct09-async-fs-process-carlsjdh</title>
+	<meta name="description" content="Documentation for prct09-async-fs-process-carlsjdh">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">prct09-async-fs-process-carlsjdh</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>prct09-async-fs-process-carlsjdh</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><a href="https://coveralls.io/github/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-carlsjdh?branch=main"><img src="https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-carlsjdh/badge.svg?branch=main" alt="Coverage Status"></a> <a href="https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-carlsjdh/actions/workflows/tests.yml"><img src="https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-carlsjdh/actions/workflows/tests.yml/badge.svg" alt="Tests"></a> <a href="https://sonarcloud.io/dashboard?id=ULL-ESIT-INF-DSI-2021_ull-esit-inf-dsi-20-21-prct09-async-fs-process-carlsjdh"><img src="https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2021_ull-esit-inf-dsi-20-21-prct09-async-fs-process-carlsjdh&metric=alert_status" alt="Quality Gate Status"></a></p>
+				<h1> P9 - Sistema de ficheros y creación de procesos en Node.js </h1>
+				<p><strong>Autor:</strong> Carlos Javier Delgado Hernandez<br><strong>Correo:</strong> alu0101016054@ull.edu.es</p>
+				<a href="#indice" id="indice" style="color: inherit; text-decoration: none;">
+					<h1>Indice:</h1>
+				</a>
+				<ul>
+					<li><a href="#indice">Indice:</a></li>
+					<li><a href="#introducci%C3%B3n">Introducción</a></li>
+					<li><a href="#objetivos">Objetivos</a></li>
+					<li><a href="#ejercicios">Ejercicios</a><ul>
+							<li><a href="#ejercicio-1">Ejercicio 1</a></li>
+							<li><a href="#ejercicio-2">Ejercicio 2</a></li>
+							<li><a href="#ejercicio-3">Ejercicio 3</a></li>
+							<li><a href="#ejercicio-4">Ejercicio 4</a></li>
+						</ul>
+					</li>
+					<li><a href="#conclusi%C3%B3n">Conclusión</a></li>
+					<li><a href="#bibliograf%C3%ADa">Bibliografía</a></li>
+				</ul>
+				<a href="#introducción" id="introducción" style="color: inherit; text-decoration: none;">
+					<h1>Introducción</h1>
+				</a>
+				<p>En esta práctica se plantean una serie de ejercicios o retos a resolver haciendo uso de las APIs proporcionadas por Node.js para interactuar con el sistema de ficheros, así como para crear procesos.</p>
+				<a href="#objetivos" id="objetivos" style="color: inherit; text-decoration: none;">
+					<h1>Objetivos</h1>
+				</a>
+				<ul>
+					<li>Gestionar ficheros con NodeJs  </li>
+					<li>Creación de procesos e interconexión entre ellos con NodeJS  </li>
+				</ul>
+				<a href="#ejercicios" id="ejercicios" style="color: inherit; text-decoration: none;">
+					<h1>Ejercicios</h1>
+				</a>
+				<a href="#ejercicio-1" id="ejercicio-1" style="color: inherit; text-decoration: none;">
+					<h2>Ejercicio 1</h2>
+				</a>
+				<p>Considere el siguiente ejemplo de código fuente TypeScript que hace uso del módulo fs de Node.js:  </p>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span><span style="color: #001080">access</span><span style="color: #000000">, </span><span style="color: #001080">constants</span><span style="color: #000000">, </span><span style="color: #001080">watch</span><span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;fs&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">argv</span><span style="color: #000000">.</span><span style="color: #001080">length</span><span style="color: #000000"> !== </span><span style="color: #098658">3</span><span style="color: #000000">) {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Please, specify a file&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">else</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filename</span><span style="color: #000000"> = </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">argv</span><span style="color: #000000">[</span><span style="color: #098658">2</span><span style="color: #000000">];</span>
+
+<span style="color: #000000">  </span><span style="color: #795E26">access</span><span style="color: #000000">(</span><span style="color: #001080">filename</span><span style="color: #000000">, </span><span style="color: #001080">constants</span><span style="color: #000000">.</span><span style="color: #0070C1">F_OK</span><span style="color: #000000">, (</span><span style="color: #001080">err</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">) {</span>
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`File </span><span style="color: #0000FF">${</span><span style="color: #001080">filename</span><span style="color: #0000FF">}</span><span style="color: #A31515"> does not exist`</span><span style="color: #000000">);</span>
+<span style="color: #000000">    } </span><span style="color: #AF00DB">else</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`Starting to watch file </span><span style="color: #0000FF">${</span><span style="color: #001080">filename</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">watcher</span><span style="color: #000000"> = </span><span style="color: #795E26">watch</span><span style="color: #000000">(</span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">argv</span><span style="color: #000000">[</span><span style="color: #098658">2</span><span style="color: #000000">]);</span>
+
+<span style="color: #000000">      </span><span style="color: #001080">watcher</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;change&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`File </span><span style="color: #0000FF">${</span><span style="color: #001080">filename</span><span style="color: #0000FF">}</span><span style="color: #A31515"> has been modified somehow`</span><span style="color: #000000">);</span>
+<span style="color: #000000">      });</span>
+
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`File </span><span style="color: #0000FF">${</span><span style="color: #001080">filename</span><span style="color: #0000FF">}</span><span style="color: #A31515"> is no longer watched`</span><span style="color: #000000">);</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  });</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>A continuación realizaremos una traza de ejecución del código anterior Teniendo en cuenta el <code>Call Stack</code>, la <code>Web Api</code> y la <code>Queue</code>. </p>
+				<p><strong>Primer caso: No se introduce un fichero</strong><br>Cuando al ejecutar el programa <code>process.argv.length</code> no es mayor que 3, eso quiere decir que no se ha especificado ningún argumento para poder establecer el fichero a observar.</p>
+				<p>Por tanto, el código se quedaría aquí:  </p>
+				<pre><code class="language-typescript"><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Please, specify a file&#039;</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>E internamente quedaría así:  </p>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><code>annonymus()</code></td>
+							<td>-</td>
+							<td>-</td>
+							<td><code>Please, specify a file</code></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<p><strong>Segundo caso: El programa funciona correctamente</strong><br>Si se especifica el argumento que contendrá el fichero a observar entonces las líneas de código que se ejecutarán serán las siguientes:  </p>
+				<pre><code class="language-typescript"><span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filename</span><span style="color: #000000"> = </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">argv</span><span style="color: #000000">[</span><span style="color: #098658">2</span><span style="color: #000000">];</span>
+
+<span style="color: #000000">  </span><span style="color: #795E26">access</span><span style="color: #000000">(</span><span style="color: #001080">filename</span><span style="color: #000000">, </span><span style="color: #001080">constants</span><span style="color: #000000">.</span><span style="color: #0070C1">F_OK</span><span style="color: #000000">, (</span><span style="color: #001080">err</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">) {</span>
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`File </span><span style="color: #0000FF">${</span><span style="color: #001080">filename</span><span style="color: #0000FF">}</span><span style="color: #A31515"> does not exist`</span><span style="color: #000000">);</span>
+<span style="color: #000000">    } </span><span style="color: #AF00DB">else</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`Starting to watch file </span><span style="color: #0000FF">${</span><span style="color: #001080">filename</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">watcher</span><span style="color: #000000"> = </span><span style="color: #795E26">watch</span><span style="color: #000000">(</span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">argv</span><span style="color: #000000">[</span><span style="color: #098658">2</span><span style="color: #000000">]);</span>
+
+<span style="color: #000000">      </span><span style="color: #001080">watcher</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;change&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`File </span><span style="color: #0000FF">${</span><span style="color: #001080">filename</span><span style="color: #0000FF">}</span><span style="color: #A31515"> has been modified somehow`</span><span style="color: #000000">);</span>
+<span style="color: #000000">      });</span>
+
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`File </span><span style="color: #0000FF">${</span><span style="color: #001080">filename</span><span style="color: #0000FF">}</span><span style="color: #A31515"> is no longer watched`</span><span style="color: #000000">);</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  });</span>
+</code></pre>
+				<p>El método <code>access</code> se colocará en <code>Call Stack</code>.  </p>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><code>(err) =&gt; {}</code></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><code>access()</code></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<p>Este al ser un método asíncrono se colocará posteriormente se colocará en <code>Web Api</code>.  </p>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td></td>
+							<td><code>(err) =&gt; {}</code></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<p>Cuando <code>access</code> terminé su evento asíncrono (comprobar si existe el fichero) mandará el callback a la <code>Queue</code>.  </p>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td></td>
+							<td></td>
+							<td><code>(err) =&gt; {}</code></td>
+							<td></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<p>Como la <code>Call Stack</code> se encuentra vacía los procesos de <code>Queue</code> pueden se introducidos y ejecutados en la <code>Call Stack</code>.  </p>
+				<table>
+					<thead>
+						<tr>
+							<th>Call Stack</th>
+							<th>Web Api</th>
+							<th>Queue</th>
+							<th>Console</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><code>(err) =&gt; {}</code></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+				</tbody></table>
+				<a href="#ejercicio-2" id="ejercicio-2" style="color: inherit; text-decoration: none;">
+					<h2>Ejercicio 2</h2>
+				</a>
+				<p>En este ejercicio tendremos que desarrollar un programa que nos permita leer el número de líneas, caracteres y palabras. Utilzaremos el módulo de <code>yargs</code> para implementar dicho proposito. Este programa permitira mediante el comando <code>get</code> obtener la información previamente dicha además de un argumento <code>option</code> para establecer que información concretamente quiere el usuario. Se nos pide dos formas de hacerlo:</p>
+				<ul>
+					<li><p>Utilizando el método <code>pipe</code>:  </p>
+						<pre><code class="language-typescript"><span style="color: #000000">    </span><span style="color: #001080">fs</span><span style="color: #000000">.</span><span style="color: #795E26">access</span><span style="color: #000000">(</span><span style="color: #001080">argv</span><span style="color: #000000">.</span><span style="color: #001080">file</span><span style="color: #000000">, </span><span style="color: #001080">constants</span><span style="color: #000000">.</span><span style="color: #0070C1">F_OK</span><span style="color: #000000">, (</span><span style="color: #001080">err</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`File </span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">file</span><span style="color: #0000FF">}</span><span style="color: #A31515"> does not exist`</span><span style="color: #000000">);</span>
+<span style="color: #000000">      } </span><span style="color: #AF00DB">else</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`Great! We can execute!`</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">        </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cat</span><span style="color: #000000"> = </span><span style="color: #795E26">spawn</span><span style="color: #000000">(</span><span style="color: #A31515">`cat`</span><span style="color: #000000">, [</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">file</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">]);</span>
+<span style="color: #000000">        </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wc</span><span style="color: #000000"> = </span><span style="color: #795E26">spawn</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;wc&#039;</span><span style="color: #000000">, [</span><span style="color: #A31515">`-</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">option</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">]);</span>
+<span style="color: #000000">        </span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">wcOutput</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000">;</span>
+<span style="color: #000000">        </span><span style="color: #001080">cat</span><span style="color: #000000">.</span><span style="color: #001080">stdout</span><span style="color: #000000">.</span><span style="color: #795E26">pipe</span><span style="color: #000000">(</span><span style="color: #001080">wc</span><span style="color: #000000">.</span><span style="color: #001080">stdin</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">        </span><span style="color: #001080">wc</span><span style="color: #000000">.</span><span style="color: #001080">stdout</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;data&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">piece</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">          </span><span style="color: #001080">wcOutput</span><span style="color: #000000"> += </span><span style="color: #001080">piece</span><span style="color: #000000">;</span>
+<span style="color: #000000">        });</span>
+
+<span style="color: #000000">        </span><span style="color: #001080">wc</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;close&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">          </span><span style="color: #AF00DB">switch</span><span style="color: #000000"> (</span><span style="color: #001080">argv</span><span style="color: #000000">.</span><span style="color: #001080">option</span><span style="color: #000000">) {</span>
+<span style="color: #000000">            </span><span style="color: #AF00DB">case</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;l&#039;</span><span style="color: #000000">:</span>
+<span style="color: #000000">              </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span>
+<span style="color: #000000">                  </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">file</span><span style="color: #0000FF">}</span><span style="color: #A31515"> has </span><span style="color: #0000FF">${</span><span style="color: #001080">wcOutput</span><span style="color: #000000FF">.</span><span style="color: #795E26">replace</span><span style="color: #000000FF">(</span><span style="color: #A31515">`</span><span style="color: #EE0000">\n</span><span style="color: #A31515">`</span><span style="color: #000000FF">, </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000FF">)</span><span style="color: #0000FF">}</span><span style="color: #A31515"> lines`</span><span style="color: #000000">,</span>
+<span style="color: #000000">              );</span>
+<span style="color: #000000">              </span><span style="color: #AF00DB">break</span><span style="color: #000000">;</span>
+<span style="color: #000000">            </span><span style="color: #AF00DB">case</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;c&#039;</span><span style="color: #000000">:</span>
+<span style="color: #000000">              </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span>
+<span style="color: #000000">                  </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">file</span><span style="color: #0000FF">}</span><span style="color: #A31515"> has </span><span style="color: #0000FF">${</span><span style="color: #001080">wcOutput</span><span style="color: #000000FF">.</span><span style="color: #795E26">replace</span><span style="color: #000000FF">(</span><span style="color: #A31515">`</span><span style="color: #EE0000">\n</span><span style="color: #A31515">`</span><span style="color: #000000FF">, </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000FF">)</span><span style="color: #0000FF">}</span><span style="color: #A31515"> characters`</span><span style="color: #000000">,</span>
+<span style="color: #000000">              );</span>
+<span style="color: #000000">              </span><span style="color: #AF00DB">break</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">            </span><span style="color: #AF00DB">case</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;w&#039;</span><span style="color: #000000">:</span>
+<span style="color: #000000">              </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span>
+<span style="color: #000000">                  </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">file</span><span style="color: #0000FF">}</span><span style="color: #A31515"> has </span><span style="color: #0000FF">${</span><span style="color: #001080">wcOutput</span><span style="color: #000000FF">.</span><span style="color: #795E26">replace</span><span style="color: #000000FF">(</span><span style="color: #A31515">`</span><span style="color: #EE0000">\n</span><span style="color: #A31515">`</span><span style="color: #000000FF">, </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000FF">)</span><span style="color: #0000FF">}</span><span style="color: #A31515"> words`</span><span style="color: #000000">,</span>
+<span style="color: #000000">              );</span>
+<span style="color: #000000">              </span><span style="color: #AF00DB">break</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">            </span><span style="color: #AF00DB">default</span><span style="color: #000000">:</span>
+<span style="color: #000000">              </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span>
+<span style="color: #000000">                  </span><span style="color: #A31515">&#039;Error, that option isnt´t available. Options = l , c , w&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">              );</span>
+<span style="color: #000000">              </span><span style="color: #AF00DB">break</span><span style="color: #000000">;</span>
+<span style="color: #000000">          }</span>
+<span style="color: #000000">        });</span>
+<span style="color: #000000">      }</span>
+<span style="color: #000000">    });</span>
+</code></pre>
+					</li>
+				</ul>
+				<p>Filtraremos los posibles errores de acceso al fichero mediante <code>fs.access</code>. Crearemos dos procesos:</p>
+				<ul>
+					<li><code>cat</code>: Encargado de mostrar el contenido del fichero</li>
+					<li><code>wc</code>: Encargado de mostrar la información de número de líneas, palabras o caracteres.
+					Ahora tan sólo sería necesario redirigir con un <code>pipe</code> la salida del <code>cat</code> al fichero hacia la entrada del proceso <code>wc</code>.  </li>
+				</ul>
+				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cat</span><span style="color: #000000"> = </span><span style="color: #795E26">spawn</span><span style="color: #000000">(</span><span style="color: #A31515">`cat`</span><span style="color: #000000">, [</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">file</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">]);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wc</span><span style="color: #000000"> = </span><span style="color: #795E26">spawn</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;wc&#039;</span><span style="color: #000000">, [</span><span style="color: #A31515">`-</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">option</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">]);</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">wcOutput</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000">;</span>
+<span style="color: #001080">cat</span><span style="color: #000000">.</span><span style="color: #001080">stdout</span><span style="color: #000000">.</span><span style="color: #795E26">pipe</span><span style="color: #000000">(</span><span style="color: #001080">wc</span><span style="color: #000000">.</span><span style="color: #001080">stdin</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>Ahora simplemente guardaremos la información wn wcOutput dentro del evento <code>data</code> del proceso <code>wc</code> </p>
+				<pre><code class="language-typescript"><span style="color: #001080">wc</span><span style="color: #000000">.</span><span style="color: #001080">stdout</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;data&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">piece</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">wcOutput</span><span style="color: #000000"> += </span><span style="color: #001080">piece</span><span style="color: #000000">;</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<p>Y finalmente, cuando el proceso termine filtraremos la información recogida según el paramatro especificado para mostrar:</p>
+				<pre><code class="language-typescript"><span style="color: #000000"> </span><span style="color: #001080">wc</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;close&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">switch</span><span style="color: #000000"> (</span><span style="color: #001080">argv</span><span style="color: #000000">.</span><span style="color: #001080">option</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">case</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;l&#039;</span><span style="color: #000000">:</span>
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span>
+<span style="color: #000000">          </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">file</span><span style="color: #0000FF">}</span><span style="color: #A31515"> has </span><span style="color: #0000FF">${</span><span style="color: #001080">wcOutput</span><span style="color: #000000FF">.</span><span style="color: #795E26">replace</span><span style="color: #000000FF">(</span><span style="color: #A31515">`</span><span style="color: #EE0000">\n</span><span style="color: #A31515">`</span><span style="color: #000000FF">, </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000FF">)</span><span style="color: #0000FF">}</span><span style="color: #A31515"> lines`</span><span style="color: #000000">,</span>
+<span style="color: #000000">      );</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">break</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">case</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;c&#039;</span><span style="color: #000000">:</span>
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span>
+<span style="color: #000000">          </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">file</span><span style="color: #0000FF">}</span><span style="color: #A31515"> has </span><span style="color: #0000FF">${</span><span style="color: #001080">wcOutput</span><span style="color: #000000FF">.</span><span style="color: #795E26">replace</span><span style="color: #000000FF">(</span><span style="color: #A31515">`</span><span style="color: #EE0000">\n</span><span style="color: #A31515">`</span><span style="color: #000000FF">, </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000FF">)</span><span style="color: #0000FF">}</span><span style="color: #A31515"> characters`</span><span style="color: #000000">,</span>
+<span style="color: #000000">      );</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">break</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">    </span><span style="color: #AF00DB">case</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;w&#039;</span><span style="color: #000000">:</span>
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span>
+<span style="color: #000000">          </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">file</span><span style="color: #0000FF">}</span><span style="color: #A31515"> has </span><span style="color: #0000FF">${</span><span style="color: #001080">wcOutput</span><span style="color: #000000FF">.</span><span style="color: #795E26">replace</span><span style="color: #000000FF">(</span><span style="color: #A31515">`</span><span style="color: #EE0000">\n</span><span style="color: #A31515">`</span><span style="color: #000000FF">, </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000FF">)</span><span style="color: #0000FF">}</span><span style="color: #A31515"> words`</span><span style="color: #000000">,</span>
+<span style="color: #000000">      );</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">break</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">    </span><span style="color: #AF00DB">default</span><span style="color: #000000">:</span>
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span>
+<span style="color: #000000">          </span><span style="color: #A31515">&#039;Error, that option isnt´t available. Options = l , c , w&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      );</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">break</span><span style="color: #000000">;</span>
+<span style="color: #000000">  }</span>
+</code></pre>
+				<ul>
+					<li>Utilizando solamente procesos:
+					El esquema sería repetir basicamente lo anterior con la pequeña modificación siguiente:  </li>
+				</ul>
+				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wc</span><span style="color: #000000"> = </span><span style="color: #795E26">spawn</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;wc&#039;</span><span style="color: #000000">, [</span><span style="color: #A31515">`-</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">option</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">, </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">argv</span><span style="color: #000000FF">.</span><span style="color: #001080">file</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">]);</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">wcOutput</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000">;</span>
+</code></pre>
+				<p>Observamos como ahora <code>wc</code> es un único proceso y todo lo demás quedaría igual.  </p>
+				<a href="#ejercicio-3" id="ejercicio-3" style="color: inherit; text-decoration: none;">
+					<h2>Ejercicio 3</h2>
+				</a>
+				<a href="#ejercicio-4" id="ejercicio-4" style="color: inherit; text-decoration: none;">
+					<h2>Ejercicio 4</h2>
+				</a>
+				<a href="#conclusión" id="conclusión" style="color: inherit; text-decoration: none;">
+					<h1>Conclusión</h1>
+				</a>
+				<a href="#bibliografía" id="bibliografía" style="color: inherit; text-decoration: none;">
+					<h1>Bibliografía</h1>
+				</a>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/ejercicio1_ejercicio1.html">ejercicio1/ejercicio1</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/ejercicio2_appwithpipe.html">ejercicio2/app<wbr>With<wbr>Pipe</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/ejercicio2_appwithoutpipe.html">ejercicio2/app<wbr>Without<wbr>Pipe</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/ejercicio3_watchnotes.html">ejercicio3/watch<wbr>Notes</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/ejercicio4_wrapper.html">ejercicio4/wrapper</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/notesapp_note_app.html">notes<wbr>App/note-<wbr>app</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/notesapp_notes.html">notes<wbr>App/notes</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
