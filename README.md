@@ -297,7 +297,7 @@ Observamos como ahora `wc` es un único proceso y todo lo demás quedaría igual
 
 ## Ejercicio 3
 
-Desarollar una aplicación usando el módulo `yargs` que nos permita notificar sobre modificaciones de las notas (respecto a la práctica 8) de cierto usuario concreto. Para ellos utilizaremos el módulo [`chokidar`](https://github.com/paulmillr/chokidar) que nos permitirá observar cambios de dicho directorio (Se ha sustituido por `Watchfile` de Node Js por presentar errores en duplicación de eventos en sistemas linux).  
+Desarrollar una aplicación usando el módulo `yargs` que nos permita notificar sobre modificaciones de las notas (respecto a la práctica 8) de cierto usuario concreto. Para ellos utilizaremos el módulo [`chokidar`](https://github.com/paulmillr/chokidar) que nos permitirá observar cambios de dicho directorio (Se ha sustituido por `Watchfile` de Node Js por presentar errores en duplicación de eventos en sistemas linux).  
 
 Para observar las notas de un usuario utilizaremos el comando `watch` con el parametro `user` para especificar el usuario concreto que deseamos observar.  
 
@@ -360,8 +360,77 @@ En el evento `change` y `add` del `watcher` leeríamos el fichero correspondient
 
 
 __¿Cómo haría para que no solo se observase el directorio de un único usuario sino todos los directorios correspondientes a los diferentes usuarios de la aplicación de notas?__  
-Cambiar el ambito del parámetro a todo el fichero que contiene todas las notas de todos los usuarios para observar todos los cambios de dicho directorio.  
+Cambiar el ámbito del parámetro a todo el fichero que contiene todas las notas de todos los usuarios para observar todos los cambios de dicho directorio.  
 
-## Ejercicio 4
+## Ejercicio 4  
+
+Desarrollar un programa que use el módulo de `yargs` que nos permita hacer de `wrapper` enrre los diferentes comandos en Linux, concretamente los siguientes:  
+
+__1. Dada una ruta concreta, mostrar si es un directorio o un fichero.__  
+El comando para invocar este programa es `check` y deberemos pasar el argumento `path` para especificar la ruta que queremos comprobar si es un fichero o un directorio.  
+Para resolver este problema, haremos uso de la función `fs.lstat` que no devolverá información de utilidad sobre la ruta establecida como parametro:  
+
+````typescript
+fs.lstat(`${argv.path}`, (err, stats) => {
+  if (err) {
+    console.log('Error, path doesn´t exist');
+  } else {
+    if (stats.isFile()) {
+      console.log(`${argv.path} is a File`);
+    } else {
+      console.log(`${argv.path} is a Directory`);
+    }
+  }
+});
+````
+
+Con las información de `stats` esta nos dirá si es un fichero con `isFile()` que si devuelve true mostrará que si es un fichero y si es false mostrará que es un directorio.  
+
+__2. Crear un nuevo directorio a partir de una nueva ruta que recibe como parámetro.__  
+El comando para invocar dicho programa es `mkdir` cuyo parametro para ser utilizado es `path`.  
+Aprovecharemos la función `fs.mkdir` para crear directorios con el `path` del argumento:  
+
+````typescript
+fs.mkdir(`${argv.path}`, {recursive: true}, (err) => {
+  if (err) console.log('Error during creating directory...');
+});
+````  
+
+En caso de producirse un error para crear el directorio se avisará por consola.  
+
+__3. Listar los ficheros dentro de un directorio.__  
+El comando `list` nos permitirá listar los ficheros de un directorio pasado por el argumento `path`. En esta ocasión utilizaremos la función `fs.readdir()`:  
+
+````typescript
+fs.readdir(`${argv.path}`, (err, files) => {
+  if (err) {
+    console.log(`Dir ${argv.path} doesn´t exit`);
+  } else {
+    console.log(`List of ${argv.path}:`);
+    files.forEach((file) => {
+      console.log(file);
+    });
+  }
+});
+```` 
+`fs.readdir()`  devolerá `files` que contiene un array de todos los nombres de los ficheros de dicho directorio, razón por la cual se efectúa un `forEach` para mostrar por consola cada `file`.  
+
+__4. Mostrar el contenido de un fichero (similar a ejecutar el comando cat)__  
+Para invocar este comando usaremos `cat` y como argumento `path` para especificar el fichero que queremos visualizar:  
+
+````typescript
+fs.readFile(`${argv.path}`, (err, data) => {
+  if (err) {
+    console.log(`Can´t read First Note`);
+  } else {
+    console.log(data.toString());
+  }
+});
+````  
+
+Usaremos `fs.readFile` que simplemente lee el fichero de la ruta `path` y posteriomente mostramos por consola a traves del tipo de dato `buffer` que contiene `data`.  
+
+
+
 # Conclusión
 # Bibliografía
