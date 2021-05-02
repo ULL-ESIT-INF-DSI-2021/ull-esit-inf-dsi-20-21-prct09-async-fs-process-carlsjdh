@@ -50,12 +50,146 @@ if (process.argv.length !== 3) {
   });
 }
 ````
-A continuación realizaremos una traza de ejecución del código anterior Teniendo en cuenta el `Call Stack`, la `Web Api` y la `Queue`.  
-| Call Stack |        | Call Stack |
-|------------|        |------------|
-|```anonymous()```|   |```anonymous()```|
+A continuación realizaremos una traza de ejecución del código anterior Teniendo en cuenta el `Call Stack`, la `Web Api` y la `Queue`. 
 
+__Primer caso: No se introduce un fichero__  
+Cuando al ejecutar el programa `process.argv.length` no es mayor que 3, eso quiere decir que no se ha especificado ningún argumento para poder establecer el fichero a observar.
+
+Por tanto, el código se quedaría aquí:
+````typescript
+console.log('Please, specify a file');
+````
+E internamente quedaría así:
+| Call Stack  |   Web Api   | Queue  |  Console |   |
+|---|---|---|---|---|
+|  `annonymus()` | -  |  - | `Please, specify a file` |   |
+
+__Segundo caso: El programa funciona correctamente__
+Si se especifica el argumento que contendrá el fichero a observar entonces las líneas de código que se ejecutarán serán las siguientes:  
+````typescript
+  const filename = process.argv[2];
+
+  access(filename, constants.F_OK, (err) => {
+    if (err) {
+      console.log(`File ${filename} does not exist`);
+    } else {
+      console.log(`Starting to watch file ${filename}`);
+
+      const watcher = watch(process.argv[2]);
+
+      watcher.on('change', () => {
+        console.log(`File ${filename} has been modified somehow`);
+      });
+
+      console.log(`File ${filename} is no longer watched`);
+    }
+  });
+````
+| Call Stack  |   Web Api   | Queue  |  Console |   |
+|---|---|---|---|---|
+|  d | d  |  d |  d |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
 ## Ejercicio 2
+En este ejercicio tendremos que desarrollar un programa que nos permita leer el número de líneas, caracteres y palabras. Utilzaremos el módulo de `yargs` para implementar dicho proposito. Este programa permitira mediante el comando `get` obtener la información previamente dicha además de un argumento `option` para establecer que información concretamente quiere el usuario. Se nos pide dos formas de hacerlo:
+- Utilizando el método `pipe`:  
+  
+  ````typescript
+      fs.access(argv.file, constants.F_OK, (err) => {
+        if (err) {
+          console.log(`File ${argv.file} does not exist`);
+        } else {
+          console.log(`Great! We can execute!`);
+
+          const cat = spawn(`cat`, [`${argv.file}`]);
+          const wc = spawn('wc', [`-${argv.option}`]);
+          let wcOutput = '';
+          cat.stdout.pipe(wc.stdin);
+
+          wc.stdout.on('data', (piece) => {
+            wcOutput += piece;
+          });
+
+          wc.on('close', () => {
+            switch (argv.option) {
+              case 'l':
+                console.log(
+                    `${argv.file} has ${wcOutput.replace(`\n`, '')} lines`,
+                );
+                break;
+              case 'c':
+                console.log(
+                    `${argv.file} has ${wcOutput.replace(`\n`, '')} characters`,
+                );
+                break;
+
+              case 'w':
+                console.log(
+                    `${argv.file} has ${wcOutput.replace(`\n`, '')} words`,
+                );
+                break;
+
+              default:
+                console.log(
+                    'Error, that option isnt´t available. Options = l , c , w',
+                );
+                break;
+            }
+          });
+        }
+      });
+  ````
+Filtraremos los posibles errores de acceso al fichero mediante `fs.access`. Crearemos dos procesos:
+- `cat`: Encargado de mostrar el contenido del fichero
+- `wc`: Encargado de mostrar la información de número de líneas, palabras o caracteres. 
+Ahora tan sólo sería necesario redirigir con un `pipe` la salida del `cat` al fichero hacia la entrada del proceso `wc`.  
+
+````typescript
+const cat = spawn(`cat`, [`${argv.file}`]);
+const wc = spawn('wc', [`-${argv.option}`]);
+let wcOutput = '';
+cat.stdout.pipe(wc.stdin);
+````
+
+Ahora simplemente guardaremos la información wn wcOutput dentro del evento `data` del proceso `wc` 
+
+````typescript
+wc.stdout.on('data', (piece) => {
+  wcOutput += piece;
+});
+````
+
+Y finalmente, cuando el proceso termine filtraremos la información recogida según el paramatro especificado para mostrar:
+
+````typescript
+ wc.on('close', () => {
+  switch (argv.option) {
+    case 'l':
+      console.log(
+          `${argv.file} has ${wcOutput.replace(`\n`, '')} lines`,
+      );
+      break;
+    case 'c':
+      console.log(
+          `${argv.file} has ${wcOutput.replace(`\n`, '')} characters`,
+      );
+      break;
+
+    case 'w':
+      console.log(
+          `${argv.file} has ${wcOutput.replace(`\n`, '')} words`,
+      );
+      break;
+
+    default:
+      console.log(
+          'Error, that option isnt´t available. Options = l , c , w',
+      );
+      break;
+  }
+````  
+
+
 ## Ejercicio 3
 ## Ejercicio 4
 # Conclusión
