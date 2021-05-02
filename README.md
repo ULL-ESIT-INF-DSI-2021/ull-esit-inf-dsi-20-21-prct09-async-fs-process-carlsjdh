@@ -296,6 +296,72 @@ let wcOutput = '';
 Observamos como ahora `wc` es un único proceso y todo lo demás quedaría igual.  
 
 ## Ejercicio 3
+
+Desarollar una aplicación usando el módulo `yargs` que nos permita notificar sobre modificaciones de las notas (respecto a la práctica 8) de cierto usuario concreto. Para ellos utilizaremos el módulo [`chokidar`](https://github.com/paulmillr/chokidar) que nos permitirá observar cambios de dicho directorio (Se ha sustituido por `Watchfile` de Node Js por presentar errores en duplicación de eventos en sistemas linux).  
+
+Para observar las notas de un usuario utilizaremos el comando `watch` con el parametro `user` para especificar el usuario concreto que deseamos observar.  
+
+````typescript
+fs.access(`./notes/${argv.user}`, constants.F_OK, (err) => {
+  if (err) {
+    console.log(`Directory ${argv.user} does not exist`);
+  } else {
+    const watcher = chokidar.watch(`./notes/${argv.user}`);
+    watcher.on('add', (file, _) => {
+      if ( fs.existsSync(file)) {
+        console.log(`${file} has been added!`);
+      }
+    });
+
+    watcher.on('change', (file, _) => {
+      if ( fs.existsSync(file)) {
+        console.log(`${file} has been changed!`);
+      }
+    });
+
+    watcher.on('unlink', (file) => {
+      console.log(`${file} has been deleted!`);
+    });
+  }
+});
+````  
+
+Nuevamente, utilizaremos `access` para verificar que el directorio existe. Posteriormente crearemos el `Watcher` hacia el directorio del usuario especificado en el argumento y filtraremos según los siguientes eventos que ocurran:
+- `add`: Este evento se invoca cuando se agrega un nuevo fichero al directorio. Mostraremos el evento por consola de dicho evento
+
+````typescript
+watcher.on('add', (file, _) => {
+  if ( fs.existsSync(file)) {
+    console.log(`${file} has been added!`);
+  }
+});
+````  
+
+- `change`: Este evento se invoca cuando se agrega un nuevo fichero al directorio. Mostraremos el evento por consola de dicho evento.
+
+````typescript
+watcher.on('change', (file, _) => {
+  if ( fs.existsSync(file)) {
+    console.log(`${file} has been changed!`);
+  }
+});
+````  
+
+- `unlink`: Este evento se invoca cuando se elimina un fichero del directorio. Mostraremos el evento por consola de dicho evento.
+
+````typescript
+watcher.on('unlink', (file) => {
+  console.log(`${file} has been deleted!`);
+});
+````  
+
+__¿Cómo haría para mostrar, no solo el nombre, sino también el contenido del fichero, en el caso de que haya sido creado o modificado?__  
+En el evento `change` y `add` del `watcher` leeríamos el fichero correspondiente que nos pasa por parametro utilizando el método `fs.readFile` que nos devuelve a su vez el contenido del fichero nuevo/modificado para mostrarlo por consola.
+
+
+__¿Cómo haría para que no solo se observase el directorio de un único usuario sino todos los directorios correspondientes a los diferentes usuarios de la aplicación de notas?__  
+Cambiar el ambito del parámetro a todo el fichero que contiene todas las notas de todos los usuarios para observar todos los cambios de dicho directorio.  
+
 ## Ejercicio 4
 # Conclusión
 # Bibliografía
