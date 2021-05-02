@@ -175,56 +175,66 @@ Cuando se produce un cambio ocurre lo siguiente:
 |  | `() => {} (change)`  |   | `File ${filename} has been modified somehow` |   |  
 
 
-Y así sucesivamente por cada cambio ya que el watch quedará bloquedo dentro del `Web api` por cada cambio enviando su `call back`.  
+Y así sucesivamente por cada cambio ya que el watch quedará bloquedo dentro del `Web api` por cada cambio enviando su `call back`. 
+
+__¿Qué hace la función access? ¿Para qué sirve el objeto constants?__  
+La función access nos permite obtener información de acceso sobre el fichero. El nivel de acceso que queremos saber se determina por la constante `constants` teniendo cuatro variantes:  
+- `F_OK`: Comprueba si el fichero existe. Pero no comprueba sus permisos
+- `R_OK`: Comprueba si el fichero puede ser leído
+- `W_OK`: Comprueba si un fichero puede ser escrito
+- `X_OK`: Comprueba si un fichero puede ser ejecutado  
+
+
 ## Ejercicio 2
-En este ejercicio tendremos que desarrollar un programa que nos permita leer el número de líneas, caracteres y palabras. Utilzaremos el módulo de `yargs` para implementar dicho proposito. Este programa permitira mediante el comando `get` obtener la información previamente dicha además de un argumento `option` para establecer que información concretamente quiere el usuario. Se nos pide dos formas de hacerlo:
+En este ejercicio tendremos que desarrollar un programa que nos permita leer el número de líneas, caracteres y palabras. Utilzaremos el módulo de `yargs` para implementar dicho proposito. Este programa permitira mediante el comando `get` obtener la información previamente dicha además de un argumento `option` para establecer que información concretamente quiere el usuario. Se nos pide dos formas de hacerlo:  
+
 - Utilizando el método `pipe`:  
   
-  ````typescript
-      fs.access(argv.file, constants.F_OK, (err) => {
-        if (err) {
-          console.log(`File ${argv.file} does not exist`);
-        } else {
-          console.log(`Great! We can execute!`);
+````typescript
+    fs.access(argv.file, constants.F_OK, (err) => {
+      if (err) {
+        console.log(`File ${argv.file} does not exist`);
+      } else {
+        console.log(`Great! We can execute!`);
 
-          const cat = spawn(`cat`, [`${argv.file}`]);
-          const wc = spawn('wc', [`-${argv.option}`]);
-          let wcOutput = '';
-          cat.stdout.pipe(wc.stdin);
+        const cat = spawn(`cat`, [`${argv.file}`]);
+        const wc = spawn('wc', [`-${argv.option}`]);
+        let wcOutput = '';
+        cat.stdout.pipe(wc.stdin);
 
-          wc.stdout.on('data', (piece) => {
-            wcOutput += piece;
-          });
+        wc.stdout.on('data', (piece) => {
+          wcOutput += piece;
+        });
 
-          wc.on('close', () => {
-            switch (argv.option) {
-              case 'l':
-                console.log(
-                    `${argv.file} has ${wcOutput.replace(`\n`, '')} lines`,
-                );
-                break;
-              case 'c':
-                console.log(
-                    `${argv.file} has ${wcOutput.replace(`\n`, '')} characters`,
-                );
-                break;
+        wc.on('close', () => {
+          switch (argv.option) {
+            case 'l':
+              console.log(
+                  `${argv.file} has ${wcOutput.replace(`\n`, '')} lines`,
+              );
+              break;
+            case 'c':
+              console.log(
+                  `${argv.file} has ${wcOutput.replace(`\n`, '')} characters`,
+              );
+              break;
 
-              case 'w':
-                console.log(
-                    `${argv.file} has ${wcOutput.replace(`\n`, '')} words`,
-                );
-                break;
+            case 'w':
+              console.log(
+                  `${argv.file} has ${wcOutput.replace(`\n`, '')} words`,
+              );
+              break;
 
-              default:
-                console.log(
-                    'Error, that option isnt´t available. Options = l , c , w',
-                );
-                break;
-            }
-          });
-        }
-      });
-  ````  
+            default:
+              console.log(
+                  'Error, that option isnt´t available. Options = l , c , w',
+              );
+              break;
+          }
+        });
+      }
+    });
+````  
 
 Filtraremos los posibles errores de acceso al fichero mediante `fs.access`. Crearemos dos procesos:
 - `cat`: Encargado de mostrar el contenido del fichero
@@ -275,8 +285,9 @@ Y finalmente, cuando el proceso termine filtraremos la información recogida seg
       break;
   }
 ````  
-- Utilizando solamente procesos:
-  El esquema sería repetir basicamente lo anterior con la pequeña modificación siguiente:  
+- Utilizando solamente procesos:  
+
+El esquema sería repetir basicamente lo anterior con la pequeña modificación siguiente:  
 
 ````typescript
 const wc = spawn('wc', [`-${argv.option}`, `${argv.file}`]);
